@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31004.235
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LitMirParser", "LitMirParser.csproj", "{33EC8F7B-6BD4-4D71-923E-0DAEFE0CF7FE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{33EC8F7B-6BD4-4D71-923E-0DAEFE0CF7FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33EC8F7B-6BD4-4D71-923E-0DAEFE0CF7FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33EC8F7B-6BD4-4D71-923E-0DAEFE0CF7FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33EC8F7B-6BD4-4D71-923E-0DAEFE0CF7FE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {99815F69-2178-4013-9F54-30CA3E7D6BBF}
+	EndGlobalSection
+EndGlobal

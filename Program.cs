@@ -55,10 +55,22 @@ namespace LitMirParser
 
                 var books = driver.FindElements(By.XPath("//img[@class='lazy']/following-sibling::a")); // Находим кнопки "Скачать"
 
-                var rand2 = rnd.Next(1, 99);
-                try { driver.FindElement(By.XPath($"(//label[text()='fb2'])[{rand2}]")).Click(); } catch { } // Выбираем FB2
-                driver.ExecuteScript(books[rand2].GetAttribute("onclick")).ToString(); // Скачиваем
-                Console.WriteLine($"\tКнига {rand2} на странице {rand} скачана!"); // Лог в консоль
+                var rand2 = rnd.Next(0, 100);
+            again:
+                try
+                {
+                    try { driver.FindElement(By.XPath($"(//label[text()='fb2'])[{rand2}]")).Click(); } catch { } // Выбираем FB2
+                    driver.ExecuteScript(books[rand2].GetAttribute("onclick")).ToString(); // Скачиваем
+                    Console.WriteLine($"\tКнига {rand2} на странице {rand} скачана!"); // Лог в консоль
+                }
+                catch
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("\tУпс...");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    rand2 = rnd.Next(0, 100);
+                    goto again;
+                }
             }
         }
 

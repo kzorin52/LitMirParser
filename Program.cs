@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
+using System.Collections.Generic;
 
 // Все права на данную программу принадлежат некоему 
 // читаке с ником Temnij, тобишь мне. Связь со мной возможна
@@ -18,16 +19,24 @@ namespace LitMirParser
         {
             #region Всякие переменные
 
-            var catId = input("ID категории:");
+            var catId = input("ID категории:"); //sg276
             var pages = input("Количество страниц:").intParse();
+            List<int> been = new List<int>();
+            Random rnd = new Random();
 
             #endregion
             #region Создаём драйвер Chrome
 
-            var options = new ChromeOptions();
+            var options = new ChromeOptions
+            {
+                BinaryLocation = @"C:\Program Files\Google\Chrome Beta\Application\chrome.exe"
+            };
+
             #region Отключаем логгирование
+
             options.AddArgument("--log-level=3");
             options.AddArgument("--disable-logging");
+
             #endregion
             var driver = new ChromeDriver(options);
 
@@ -35,18 +44,21 @@ namespace LitMirParser
 
             for (int page = pages; page > 0; page--) // По сути, качаем с конца, но так даже удобнее
             {
-                driver.Url = $"https://www.litmir.me/bs/?g={catId}&o=100&p={page}"; // Устанавливаем Url
+                int rand = 0;
+            generate:
+                rand = rnd.Next(1, 63);
+                if (been.Contains(rand))
+                    goto generate;
+                been.Add(rand);
+
+                driver.Url = $"https://www.litmir.me/bs/?g={catId}&o=100&p={rand}"; // Устанавливаем Url
 
                 var books = driver.FindElements(By.XPath("//img[@class='lazy']/following-sibling::a")); // Находим кнопки "Скачать"
 
-                for (int book = 0; book < books.Count; book++)
-                {
-                    try { driver.FindElement(By.XPath($"(//label[text()='fb2'])[{book}]")).Click(); } catch { } // Выбираем FB2
-                    driver.ExecuteScript(books[book].GetAttribute("onclick")).ToString(); // Скачиваем
-                    Console.WriteLine($"\tКнига {book} скачана!"); // Лог в консоль
-                }
-
-                Console.WriteLine($"Страница {page} скачана!"); // Лог в консоль
+                var rand2 = rnd.Next(1, 99);
+                try { driver.FindElement(By.XPath($"(//label[text()='fb2'])[{rand2}]")).Click(); } catch { } // Выбираем FB2
+                driver.ExecuteScript(books[rand2].GetAttribute("onclick")).ToString(); // Скачиваем
+                Console.WriteLine($"\tКнига {rand2} на странице {rand} скачана!"); // Лог в консоль
             }
         }
 

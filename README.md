@@ -7,4 +7,4 @@ https://vk.com/temnijvk.
 <br>
 Собственно, программа сделана в обучающих целях, как пример работы с Selenium.
 
-![логгер](https://mypic.icu/image.php?id=XOBTBM.png "логгер для статистики")
+![](https://mypic.icu/image.php?id=XOBTBM.png)

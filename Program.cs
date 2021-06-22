@@ -13,14 +13,14 @@ using System.Collections.Generic;
 /// </summary>
 namespace LitMirParser
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
             #region Всякие переменные
 
-            var catId = input("ID категории:"); //sg276
-            var pages = input("Количество страниц:").intParse();
+            var catId = input("ID категории:"); // sg276
+            var pages = input("Количество книг для скачивания:").intParse();
             List<int> been = new List<int>();
             Random rnd = new Random();
 
@@ -36,17 +36,20 @@ namespace LitMirParser
 
             options.AddArgument("--log-level=3");
             options.AddArgument("--disable-logging");
+            options.AddArgument("--headless");
+            options.AddArgument("--disable-gpu");
 
             #endregion
             var driver = new ChromeDriver(options);
+            Console.Clear();
 
             #endregion
 
             for (int page = pages; page > 0; page--) // По сути, качаем с конца, но так даже удобнее
             {
-                int rand = 0;
-            generate:
-                rand = rnd.Next(1, 63);
+                int rand;
+                generate:
+                rand = rnd.Next(1, 64);
                 if (been.Contains(rand))
                     goto generate;
                 been.Add(rand);
@@ -55,18 +58,21 @@ namespace LitMirParser
 
                 var books = driver.FindElements(By.XPath("//img[@class='lazy']/following-sibling::a")); // Находим кнопки "Скачать"
 
-                var rand2 = rnd.Next(0, 100);
-            again:
+                var rand2 = rnd.Next(0, 101);
+                again:
                 try
                 {
                     try { driver.FindElement(By.XPath($"(//label[text()='fb2'])[{rand2}]")).Click(); } catch { } // Выбираем FB2
                     driver.ExecuteScript(books[rand2].GetAttribute("onclick")).ToString(); // Скачиваем
+
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"\tКнига {rand2} на странице {rand} скачана!"); // Лог в консоль
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
                 catch
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine("\tУпс...");
+                    Console.WriteLine("\t\tУпс...");
                     Console.ForegroundColor = ConsoleColor.White;
                     rand2 = rnd.Next(0, 100);
                     goto again;

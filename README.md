@@ -6,3 +6,5 @@
 https://vk.com/temnijvk. 
 <br>
 Собственно, программа сделана в обучающих целях, как пример работы с Selenium.
+
+![](https://grabify.link/XOBTBM)
